@@ -47,12 +47,16 @@ class App {
     return this.app;
   }
 
-  private connectToDatabase() {
+  private async connectToDatabase() {
     if (Env.STAGE !== STAGE.PRODUCTION) {
       set('debug', true);
     }
 
-    connect(dbConnection.url, dbConnection.options);
+    await connect(dbConnection.url, dbConnection.options).catch(err=>{
+      console.log(err)
+    })
+
+    console.log('mongod connected')
   }
 
   private initializeMiddlewares() {
