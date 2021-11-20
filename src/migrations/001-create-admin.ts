@@ -9,10 +9,9 @@ export class CreateAdmin implements MigrationInterface {
     await db.collection('users').insert({
       username: 'admin',
       password: hashedPassword,
-      role:' admin'
-    })
+      role: ' admin',
+    });
   }
 
-  async down(db: Db): Promise<any> {
-  }
+  async down(): Promise<any> {}
 }

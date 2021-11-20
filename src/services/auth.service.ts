@@ -15,17 +15,14 @@ class AuthService {
   public async signup(userData: CreateUserDto): Promise<any> {
     // await admin.crea
     // if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
-
     // const findUser: User = await this.users.findOne({ username: userData.username });
     // if (findUser) throw new HttpException(409, `${userData.username} already exists`);
-
     // const hashedPassword = await bcrypt.hash(userData.password, 10);
     // const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
-
     // return createUserData;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ tokenData: TokenData, user:User }> {
+  public async login(userData: CreateUserDto): Promise<{ tokenData: TokenData; user: User }> {
     const user: User = await this.users.findOne({ username: userData.username }).select('+password');
     if (!user) throw new HttpException(409, `${userData.username} not found`);
 

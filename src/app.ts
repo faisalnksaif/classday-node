@@ -1,6 +1,6 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
-import admin from 'firebase-admin'
+import admin from 'firebase-admin';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -25,8 +25,8 @@ class App {
 
   constructor(routes: Routes[]) {
     this.app = express();
-    this.port = Env.PORT
-    this.env = Env.STAGE
+    this.port = Env.PORT;
+    this.env = Env.STAGE;
 
     this.connectToDatabase();
     this.initializeMiddlewares();
@@ -55,10 +55,10 @@ class App {
     }
 
     await connect(dbConnection.url, dbConnection.options).catch(err => {
-      console.log(err)
-    })
+      console.log(err);
+    });
 
-    console.log('mongod connected')
+    console.log('mongod connected');
   }
 
   private initializeMiddlewares() {
@@ -78,10 +78,10 @@ class App {
     });
   }
 
-  private initializeFirebase(){
+  private initializeFirebase() {
     admin.initializeApp({
-      credential: admin.credential.cert(require('./configs/firebase-admin.json'))
-    })
+      credential: admin.credential.cert(require('./configs/firebase-admin.json')),
+    });
   }
 
   private initializeSwagger() {
