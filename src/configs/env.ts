@@ -14,11 +14,6 @@ export class Env {
 
   public static get MONGO_URL(): string {
     switch (Env.STAGE) {
-      case STAGE.DEVELOPMENT: console.log(`mongodb://${process.env.MONGO_HOST_DEV}:${process.env.MONGO_PORT_DEV}/${process.env.MONGO_DB_DEV}`)
-      case STAGE.PRODUCTION: console.log(`mongodb://${process.env.MONGO_HOST_PROD}:${process.env.MONGO_PORT_PROD}/${process.env.MONGO_DB_PROD}`)
-    }
-
-    switch (Env.STAGE) {
       case STAGE.DEVELOPMENT: return `mongodb://${process.env.MONGO_HOST_DEV}:${process.env.MONGO_PORT_DEV}/${process.env.MONGO_DB_DEV}`
       case STAGE.PRODUCTION: return `mongodb://${process.env.MONGO_HOST_PROD}:${process.env.MONGO_PORT_PROD}/${process.env.MONGO_DB_PROD}`
     }

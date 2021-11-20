@@ -1,3 +1,4 @@
+// import {createUserWithEmailAndPassword} from '@firebase/auth'
 import bcrypt from 'bcrypt';
 import config from 'config';
 import jwt from 'jsonwebtoken';
@@ -11,37 +12,34 @@ import { isEmpty } from '@utils/util';
 class AuthService {
   public users = userModel;
 
-  public async signup(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+  public async signup(userData: CreateUserDto): Promise<any> {
+    // await admin.crea
+    // if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: User = await this.users.findOne({ username: userData.username });
-    if (findUser) throw new HttpException(409, `${userData.username} already exists`);
+    // const findUser: User = await this.users.findOne({ username: userData.username });
+    // if (findUser) throw new HttpException(409, `${userData.username} already exists`);
 
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
+    // const hashedPassword = await bcrypt.hash(userData.password, 10);
+    // const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
 
-    return createUserData;
+    // return createUserData;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: User }> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+  public async login(userData: CreateUserDto): Promise<{ tokenData: TokenData, user:User }> {
+    const user: User = await this.users.findOne({ username: userData.username }).select('+password');
+    if (!user) throw new HttpException(409, `${userData.username} not found`);
 
-    const findUser: User = await this.users.findOne({ username: userData.username });
-    if (!findUser) throw new HttpException(409, `${userData.username} not found`);
-
-    const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
+    const isPasswordMatching: boolean = await bcrypt.compare(userData.password, user.password);
     if (!isPasswordMatching) throw new HttpException(409, "You're password not matching");
+    const tokenData = this.createToken(user);
 
-    const tokenData = this.createToken(findUser);
-    const cookie = this.createCookie(tokenData);
-
-    return { cookie, findUser };
+    return { tokenData, user };
   }
 
   public async logout(userData: User): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: User = await this.users.findOne({ email: userData.email, password: userData.password });
+    const findUser: User = await this.users.findOne({ email: userData.email, password: userData.password }).select('+password');
     if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
 
     return findUser;

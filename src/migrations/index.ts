@@ -9,6 +9,6 @@ mongoMigrateCli({
   migrationsDir: __dirname,
   migrationsCollection: 'migrations_collection',
   options: {
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   }
 });

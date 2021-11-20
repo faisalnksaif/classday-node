@@ -1,5 +1,6 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
+import admin from 'firebase-admin'
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -15,7 +16,7 @@ import { dbConnection } from '@databases';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
-import { Env, STAGE } from './configs/env';
+import { Env, STAGE } from '@/configs/env';
 
 class App {
   public app: express.Application;
@@ -32,6 +33,7 @@ class App {
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
+    this.initializeFirebase();
   }
 
   public listen() {
@@ -52,7 +54,7 @@ class App {
       set('debug', true);
     }
 
-    await connect(dbConnection.url, dbConnection.options).catch(err=>{
+    await connect(dbConnection.url, dbConnection.options).catch(err => {
       console.log(err)
     })
 
@@ -74,6 +76,12 @@ class App {
     routes.forEach(route => {
       this.app.use('/', route.router);
     });
+  }
+
+  private initializeFirebase(){
+    admin.initializeApp({
+      credential: admin.credential.cert(require('./configs/firebase-admin.json'))
+    })
   }
 
   private initializeSwagger() {

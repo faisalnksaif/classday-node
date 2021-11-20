@@ -16,6 +16,7 @@
     "migrate:dev": "cross-env NODE_ENV=development ts-node src/migrations/index.ts up"
   },
   "dependencies": {
+    "@firebase/auth": "^0.19.3",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
@@ -27,6 +28,7 @@
     "dotenv": "^10.0.0",
     "envalid": "^7.1.0",
     "express": "^4.17.1",
+    "firebase-admin": "^10.0.0",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
     "jest": "^27.0.6",
