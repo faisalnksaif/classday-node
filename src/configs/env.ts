@@ -23,6 +23,10 @@ export class Env {
     }
   }
 
+  public static get FIREBASE_SERVICE_ACCOUNT_KEY_PATH(): string {
+    return process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH
+  }
+
   public static get PORT(): string | number {
     return process.env.PORT || 3000;
   }

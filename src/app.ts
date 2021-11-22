@@ -80,7 +80,7 @@ class App {
 
   private initializeFirebase() {
     admin.initializeApp({
-      credential: admin.credential.cert(require('./configs/firebase-admin.json')),
+      credential: admin.credential.cert(require(Env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH)),
     });
   }
 
