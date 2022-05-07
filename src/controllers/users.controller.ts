@@ -1,16 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@interfaces/users.interface';
-import userService from '@services/users.service';
+import UserService from '@services/users.service';
 
 class UsersController {
-  public userService = new userService();
+  public userService = new UserService();
 
   public getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllUsersData: User[] = await this.userService.findAllUser();
+      const page: string = req.query.page as string;
+      const limit: string = (req.query.limit || '10') as string;
+      const findAllUsersData = await this.userService.findAllUser(page,limit);
 
-      res.status(200).json({ data: findAllUsersData, message: 'findAll' });
+      res.status(200).json(findAllUsersData);
     } catch (error) {
       next(error);
     }
@@ -27,13 +29,26 @@ class UsersController {
     }
   };
 
+  public getUserByFirebaseId = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId: string = req.body.firebaseUid;
+      const findOneUserData: User = await this.userService.findUserByFirebaseId(userId);
+
+      res.status(200).json(findOneUserData);
+    } catch (error) {
+      console.log('error', error)
+      next(error);
+    }
+  };
+
   public updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
-      const userData: CreateUserDto = req.body;
-      const updateUserData: User = await this.userService.updateUser(userId, userData);
+      const { name, email, firebaseUid } = req.body as CreateUserDto;
+      const updateUserData: User = await this.userService.updateUser({
+        firebaseUid, name, email
+      });
 
-      res.status(200).json({ data: updateUserData, message: 'updated' });
+      res.status(200).json(updateUserData);
     } catch (error) {
       next(error);
     }

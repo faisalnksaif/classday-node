@@ -5,7 +5,7 @@ import { Env } from '../configs/env';
 
 mongoMigrateCli({
   uri: Env.MONGO_URL,
-  database: 'zeston',
+  database: 'classday',
   migrationsDir: __dirname,
   migrationsCollection: 'migrations_collection',
   options: {

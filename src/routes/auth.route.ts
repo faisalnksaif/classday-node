@@ -1,9 +1,7 @@
 import { Router } from 'express';
 import AuthController from '@controllers/auth.controller';
-import { CreateUserDto } from '@dtos/users.dto';
 import { Routes } from '@interfaces/routes.interface';
-import jwtAuthMiddleware from '@middlewares/auth.middleware';
-import validationMiddleware from '@middlewares/validation.middleware';
+import firebaseAuthMiddleware from '@middlewares/auth.middleware';
 
 class AuthRoute implements Routes {
   public path = '/';
@@ -15,10 +13,8 @@ class AuthRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}signup`, validationMiddleware(CreateUserDto, 'body'), this.authController.signUp);
-    this.router.post(`${this.path}login`, validationMiddleware(CreateUserDto, 'body'), this.authController.logIn);
-    this.router.post(`${this.path}logout`, jwtAuthMiddleware, this.authController.logOut);
-    this.router.get(`${this.path}me`, jwtAuthMiddleware, this.authController.getuserProfile);
+    this.router.post(`${this.path}login`, firebaseAuthMiddleware, this.authController.login);
+    this.router.get(`${this.path}me`, firebaseAuthMiddleware, this.authController.getuserProfile);
   }
 }
 

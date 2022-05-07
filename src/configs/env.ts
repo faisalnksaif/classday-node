@@ -30,4 +30,28 @@ export class Env {
   public static get PORT(): string | number {
     return process.env.PORT || 3000;
   }
+
+  public static get CLOUDINARY_CLOUD_NAME(): string {
+    return process.env.CLOUDINARY_CLOUD_NAME;
+  }
+
+  public static get CLOUDINARY_API_KEY(): string {
+    return process.env.CLOUDINARY_API_KEY;
+  }
+
+  public static get CLOUDINARY_API_SECRET(): string {
+    return process.env.CLOUDINARY_API_SECRET;
+  }
+
+  public static get CLOUDINARY_URL(): string {
+    return process.env.CLOUDINARY_URL;
+  }
+
+  public static get GOOGLE_MAP_API_KEY(): string {
+    return process.env.GOOGLE_MAP_API_KEY;
+  }
+
+  public static get MAPBOX_PUBLIC_KEY(): string {
+    return process.env.MAPBOX_PUBLIC_KEY;
+  }
 }

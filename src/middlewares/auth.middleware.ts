@@ -1,32 +1,26 @@
-import config from 'config';
 import { NextFunction, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import { HttpException } from '@exceptions/HttpException';
-import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
-import userModel from '@models/users.model';
+import { auth } from 'firebase-admin'
 
-const jwtAuthMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+import { HttpException } from '@exceptions/HttpException';
+import { IRequestWithUser } from '@interfaces/auth.interface';
+
+const firebaseAuthMiddleware = async (req: IRequestWithUser, res: Response, next: NextFunction) => {
   try {
-    const Authorization = req.cookies['Authorization'] || req.header('Authorization').split('Bearer ')[1] || null;
+    const Authorization: string = req.cookies['Authorization'] || req.header('Authorization').split('Bearer ')[1] || null;
 
     if (Authorization) {
-      const secretKey: string = config.get('secretKey');
-      const verificationResponse = (await jwt.verify(Authorization, secretKey)) as DataStoredInToken;
-      const userId = verificationResponse._id;
-      const findUser = await userModel.findById(userId);
+      const { uid, email, phone_number } = await auth().verifyIdToken(Authorization)
+      req.body.firebaseUid = uid;
+      req.body.phoneNumber = phone_number
 
-      if (findUser) {
-        req.user = findUser;
-        next();
-      } else {
-        next(new HttpException(401, 'Wrong authentication token'));
-      }
+      next();
     } else {
       next(new HttpException(404, 'Authentication token missing'));
     }
   } catch (error) {
+    console.log(error);
     next(new HttpException(401, 'Wrong authentication token'));
   }
 };
 
-export default jwtAuthMiddleware;
+export default firebaseAuthMiddleware;

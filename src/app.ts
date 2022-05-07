@@ -1,5 +1,6 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
+import errorHandler from 'errorhandler'
 import admin from 'firebase-admin';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -17,6 +18,8 @@ import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
 import { Env, STAGE } from '@/configs/env';
+import cloudinary from 'cloudinary';
+import ip from 'ip'
 
 class App {
   public app: express.Application;
@@ -28,19 +31,21 @@ class App {
     this.port = Env.PORT;
     this.env = Env.STAGE;
 
-    this.connectToDatabase();
+    // this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
-    this.initializeSwagger();
+    // this.initializeSwagger();
     this.initializeErrorHandling();
-    this.initializeFirebase();
+    // this.initializeFirebase();
+
+    // this.configCloudinary()
   }
 
   public listen() {
     this.app.listen(this.port, () => {
       logger.info(`=================================`);
       logger.info(`======= ENV: ${this.env} =======`);
-      logger.info(`🚀 App listening on the port ${this.port}`);
+      logger.info(`🚀 App listening on the port ${ip.address()}:${this.port}`);
       logger.info(`=================================`);
     });
   }
@@ -61,16 +66,33 @@ class App {
     console.log('mongod connected');
   }
 
+  private configCloudinary() {
+    // Setting up cloudinary config
+    cloudinary.v2.config({
+      cloud_name: Env.CLOUDINARY_CLOUD_NAME,
+      api_key: Env.CLOUDINARY_API_KEY,
+      api_secret: Env.CLOUDINARY_API_SECRET
+    })
+  }
+
+
   private initializeMiddlewares() {
+    this.app.use(errorHandler({ log: true }));
     this.app.use(morgan(config.get('log.format'), { stream }));
     this.app.use(cors({ origin: config.get('cors.origin'), credentials: config.get('cors.credentials') }));
     this.app.use(hpp());
     this.app.use(helmet());
     this.app.use(compression());
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json({ limit: '50mb' }));
+    this.app.use(express.urlencoded({ limit: '50mb', extended: true }));
     this.app.use(cookieParser());
+
+    process.on('unhandledRejection', (error, promise) => {
+      console.log(' Oh Lord! We forgot to handle a promise rejection here: ', promise);
+      console.log(' The error was: ', error);
+    });
   }
+
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach(route => {

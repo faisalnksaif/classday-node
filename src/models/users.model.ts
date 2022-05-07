@@ -1,36 +1,36 @@
 import { model, Schema, Document } from 'mongoose';
 import { User } from '@interfaces/users.interface';
 
-// email id, password signup // 123123123asdasd
-// mobile number signup
+export enum ROLE {
+  USER = 'user',
+  ADMIN = 'admin',
+  DEALER = 'dealer'
+}
 
-// user collection -> user(mobile number, email id), name(optional), role
-
-const userSchema: Schema = new Schema({
-  username: {
+export const userSchema: Schema = new Schema({
+  name: {
     type: String,
     maxLength: [30, 'Your name cannot exceed 30 characters'],
   },
-  password: {
+  email: {
     type: String,
-    required: [true, 'Please enter your password'],
-    minlength: [6, 'Your password must be longer than 6 characters'],
-    select: false,
+    required: false,
   },
-  mobileNumber: {
+  firebaseUid: {
     type: String,
-    minlength: 10,
-    maxlength: 10,
+    required: true,
   },
   role: {
     type: String,
-    default: 'user',
+    default: ROLE.USER,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  fcmToken: {
+    type: String,
+  }
+},
+  {
+    timestamps: true
+  });
 
 const userModel = model<User & Document>('User', userSchema);
 

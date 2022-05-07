@@ -1,5 +1,6 @@
-import bcrypt from 'bcrypt';
-import { CreateUserDto } from '@dtos/users.dto';
+import _ from 'lodash'
+import { toNumber } from 'lodash'
+import { UpdateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { User } from '@interfaces/users.interface';
 import userModel from '@models/users.model';
@@ -8,9 +9,28 @@ import { isEmpty } from '@utils/util';
 class UserService {
   public users = userModel;
 
-  public async findAllUser(): Promise<User[]> {
-    const users: User[] = await this.users.find();
-    return users;
+  public async findAllUser(page: string, limit: string): Promise<{
+    users: User[],
+    total: number,
+    page: string}> {
+    const users: User[] = await this.users.find().sort({ createdAt: -1 })
+    .limit(toNumber(limit))
+    .skip((toNumber(page) - 1) * toNumber(limit));
+
+    const total = await this.users.find().countDocuments()
+
+    return {
+      users,
+      total,
+      page,
+    };
+  }
+
+  public async findUserByFirebaseId(firebaseUid: string): Promise<User> {
+    console.log(`Firebase user id is ${firebaseUid}`)
+    const user = await this.users.findOne({ firebaseUid })
+    if (!user) throw new Error('User not found with firebaseUid')
+    return user;
   }
 
   public async findUserById(userId: string): Promise<User> {
@@ -22,24 +42,15 @@ class UserService {
     return findUser;
   }
 
-  public async updateUser(userId: string, userData: CreateUserDto): Promise<User> {
+  public async updateUser(userData: UpdateUserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
-
-    if (userData.username) {
-      const findUser: User = await this.users.findOne({ email: userData.username });
-      if (findUser && findUser._id != userId) throw new HttpException(409, `${userData.username} already exists`);
-    }
-
-    if (userData.password) {
-      const hashedPassword = await bcrypt.hash(userData.password, 10);
-      userData = { ...userData, password: hashedPassword };
-    }
-
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, { userData });
+    const userId = (await new UserService().findUserByFirebaseId(userData.firebaseUid)).id
+    const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData, {new: true});
     if (!updateUserById) throw new HttpException(409, "You're not user");
 
     return updateUserById;
   }
+
 
   public async deleteUser(userId: string): Promise<User> {
     const deleteUserById: User = await this.users.findByIdAndDelete(userId);

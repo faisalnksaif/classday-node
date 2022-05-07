@@ -1,49 +1,32 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
-import { RequestWithUser } from '@interfaces/auth.interface';
+import { IRequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
 
 class AuthController {
   public authService = new AuthService();
 
-  public signUp = async (req: Request, res: Response, next: NextFunction) => {
+  public login = async (req: IRequestWithUser, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const signUpUserData: User = await this.authService.signup(userData);
+      const { firebaseUid, phoneNumber, fcmToken } = req.body
+      const userData: CreateUserDto = {
+        firebaseUid,
+        phoneNumber,
+        fcmToken,
+      }
+      const signUpUserData: User = await this.authService.login(userData);
 
-      res.status(201).json({ id: signUpUserData._id });
+      res.status(200).json({ id: signUpUserData._id });
     } catch (error) {
       next(error);
     }
   };
 
-  public logIn = async (req: Request, res: Response, next: NextFunction) => {
+
+  public getuserProfile = async (req: IRequestWithUser, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const { tokenData } = await this.authService.login(userData);
-
-      res.status(200).json(tokenData);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public logOut = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-    try {
-      const userData: User = req.user;
-      const logOutUserData: User = await this.authService.logout(userData);
-
-      res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
-      res.status(200).json({ data: logOutUserData, message: 'logout' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public getuserProfile = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-    try {
-      const user: User = req.user;
+      const user: User = req.body;
 
       res.status(200).json(user);
     } catch (error) {
