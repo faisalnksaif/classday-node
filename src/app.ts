@@ -31,12 +31,12 @@ class App {
     this.port = Env.PORT;
     this.env = Env.STAGE;
 
-    // this.connectToDatabase();
+    this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     // this.initializeSwagger();
     this.initializeErrorHandling();
-    // this.initializeFirebase();
+    this.initializeFirebase();
 
     // this.configCloudinary()
   }
