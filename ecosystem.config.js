@@ -8,7 +8,7 @@ module.exports = {
   apps: [
     {
       name: 'prod', // pm2 start App name
-      script: 'npm',
+      script: 'dist/index.js',
       args: 'run deploy:prod',
       exec_mode: 'cluster', // 'cluster' or 'fork'
       instance_var: 'INSTANCE_ID', // instance variable
@@ -22,7 +22,7 @@ module.exports = {
       output: './logs/access.log', // pm2 log file
       error: './logs/error.log', // pm2 error log file
       env: { // environment variable
-        PORT: 3000,
+        PORT: 4000,
         NODE_ENV: 'production',
       },
     },
