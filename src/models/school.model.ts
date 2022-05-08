@@ -2,8 +2,15 @@ import { ISchool } from "@/interfaces/school.interface";
 import { Schema, model, Document } from "mongoose";
 
 const SchoolSchema = new Schema({
-  name: String,
-  address: String,
+  name: {
+    type: Schema.Types.String,
+    required: true,
+    unique: true,
+  },
+  address: {
+    type: Schema.Types.String,
+    required: true,
+  },
 }, { timestamps: true });
 
 
