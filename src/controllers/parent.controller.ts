@@ -13,6 +13,16 @@ class ParentController {
       next(error);
     }
   };
+
+  public getAllBySchool = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const parents = await this.parentService.getAllBySchool(req.params.school);
+
+      res.status(200).json(parents);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default ParentController;

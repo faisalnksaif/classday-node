@@ -1,8 +1,7 @@
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { Schema } from 'mongoose';
 
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
-
-export class CreateStudentDto {
+export class CreateStudentAdmissionDto {
   @IsNotEmpty()
   @IsString()
   public name: string;
@@ -10,6 +9,10 @@ export class CreateStudentDto {
   @IsNotEmpty()
   @IsString()
   public school: Schema.Types.ObjectId;
+
+  @IsNotEmpty()
+  @IsString()
+  public parent: Schema.Types.ObjectId;
 
   @IsOptional()
   @IsString()

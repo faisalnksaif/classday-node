@@ -15,6 +15,6 @@ const StudentParentRelationSchema = new Schema({
 }, { timestamps: true });
 
 
-const parentModel = model<IStudentParentRelation & Document>('StudentParentRelation', StudentParentRelationSchema);
+const studentParentRelationModel = model<IStudentParentRelation & Document>('StudentParentRelation', StudentParentRelationSchema);
 
-export default parentModel;
+export default studentParentRelationModel;

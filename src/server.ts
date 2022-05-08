@@ -8,6 +8,8 @@ import validateEnv from '@utils/validateEnv';
 import SchoolRoute from './routes/school.route';
 import StudentRoute from './routes/student.route';
 import ParentRoute from './routes/parent.route';
+import StudentAdmissionRoute from './routes/student-admission.route';
+import ClassRoute from './routes/class.route';
 
 validateEnv();
 
@@ -16,6 +18,8 @@ const app = new App([
   new SchoolRoute(),
   new StudentRoute(),
   new ParentRoute(),
+  new StudentAdmissionRoute(),
+  new ClassRoute(),
 ]);
 
 app.listen();

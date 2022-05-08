@@ -1,5 +1,7 @@
+import paginate from 'mongoose-paginate-v2';
+import { Schema, model, Document, PaginateModel } from "mongoose";
+
 import { ISchool } from "@/interfaces/school.interface";
-import { Schema, model, Document } from "mongoose";
 
 const SchoolSchema = new Schema({
   name: {
@@ -14,6 +16,7 @@ const SchoolSchema = new Schema({
 }, { timestamps: true });
 
 
-const schoolModel = model<ISchool & Document>('School', SchoolSchema);
+SchoolSchema.plugin(paginate);
+const schoolModel = model<ISchool, PaginateModel<ISchool> & Document>('School', SchoolSchema);
 
 export default schoolModel;

@@ -1,4 +1,5 @@
 import { Document } from "mongoose"
+
 import { IParent } from "./parent.interface"
 import { IStudent } from "./student.interface"
 

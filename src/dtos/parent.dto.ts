@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { Schema } from 'mongoose';
 
 export class CreateParentDto {
   @IsNotEmpty()
@@ -7,7 +8,7 @@ export class CreateParentDto {
 
   @IsNotEmpty()
   @IsString()
-  public school: string;
+  public school: Schema.Types.ObjectId;
 
   @IsNotEmpty()
   @IsString()

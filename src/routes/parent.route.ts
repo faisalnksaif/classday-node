@@ -16,6 +16,7 @@ class ParentRoute implements Routes {
   }
 
   private initializeRoutes() {
+    this.router.get(`${this.path}/school/:school`, firebaseAuthMiddleware, this.parentController.getAllBySchool);
     this.router.post(`${this.path}`, firebaseAuthMiddleware, validationMiddleware(CreateParentDto, 'body', false), this.parentController.create);
   }
 }

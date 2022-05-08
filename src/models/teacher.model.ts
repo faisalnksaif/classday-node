@@ -1,15 +1,15 @@
 import paginate from 'mongoose-paginate-v2';
 import { Schema, model, Document, PaginateModel } from "mongoose";
 
-import { IStudent } from "@/interfaces/student.interface";
+import { ITeacher } from "@/interfaces/teacher.interface";
 
-const StudentSchema = new Schema({
+const TeacherSchema = new Schema({
   name: {
     type: Schema.Types.String,
     required: true,
-    unique: true,
   },
   mobileNumber: {
+    required: true,
     type: Schema.Types.String,
     maxLength: 10,
     minLength: 10
@@ -22,7 +22,7 @@ const StudentSchema = new Schema({
 }, { timestamps: true });
 
 
-StudentSchema.plugin(paginate);
-const studentModel = model<IStudent, PaginateModel<IStudent> & Document>('Student', StudentSchema);
+TeacherSchema.plugin(paginate);
+const teacherModel = model<ITeacher, PaginateModel<ITeacher> & Document>('Teacher', TeacherSchema);
 
-export default studentModel;
+export default teacherModel;

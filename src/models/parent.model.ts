@@ -1,5 +1,7 @@
+import paginate from 'mongoose-paginate-v2';
+
 import { IParent } from "@/interfaces/parent.interface";
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, PaginateModel } from "mongoose";
 
 const ParentSchema = new Schema({
   name: {
@@ -21,6 +23,7 @@ const ParentSchema = new Schema({
 }, { timestamps: true });
 
 
-const parentModel = model<IParent & Document>('Parent', ParentSchema);
+ParentSchema.plugin(paginate);
+const parentModel = model<IParent, PaginateModel<IParent> & Document>('Parent', ParentSchema);
 
 export default parentModel;

@@ -10,3 +10,4 @@ export interface User extends Document {
   phoneNumber?: string
   fcmToken?: string
 }
+ 
