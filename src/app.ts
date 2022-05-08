@@ -59,7 +59,9 @@ class App {
       set('debug', true);
     }
 
-    await connect(dbConnection.url, dbConnection.options).catch(err => {
+    await connect(dbConnection.url, {
+      autoIndex: true,
+    }).catch(err => {
       console.log(err);
     });
 

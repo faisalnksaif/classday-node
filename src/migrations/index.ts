@@ -8,7 +8,5 @@ mongoMigrateCli({
   database: 'classday',
   migrationsDir: __dirname,
   migrationsCollection: 'migrations_collection',
-  options: {
-    useUnifiedTopology: true,
-  },
+  options: {},
 });

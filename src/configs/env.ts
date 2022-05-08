@@ -23,6 +23,9 @@ export class Env {
         return `mongodb://${process.env.MONGO_HOST_DEV}:${process.env.MONGO_PORT_DEV}/${process.env.MONGO_DB_DEV}`;
       }
       case STAGE.PRODUCTION:
+        if (process.env.MONGO_PROD_URL) {
+          return process.env.MONGO_DEV_URL
+        }
         return `mongodb://${process.env.MONGO_HOST_PROD}:${process.env.MONGO_PORT_PROD}/${process.env.MONGO_DB_PROD}`;
     }
   }
