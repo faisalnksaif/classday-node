@@ -1,7 +1,11 @@
 import _ from 'lodash'
+
 import classModel from '@/models/class.model';
-import { IClass } from '@/interfaces/class.interface';
+import { IBaseClass, IClass } from '@/interfaces/class.interface';
 import { CreateClassDto } from '@/dtos/class.dto';
+import ClassMasterService from './classMaster.service';
+import { IBaseClassMaster } from '@/interfaces/classMaster.interface';
+
 
 class ClassService {
   public classModel = classModel;
@@ -10,12 +14,58 @@ class ClassService {
     return this.classModel.create(data);
   }
 
+  public async createClassesWithSchoolCreation({
+    lowerSection,
+    higherSection,
+    schoolId
+  }: {
+    lowerSection: string
+    higherSection: string
+    schoolId: string
+  }): Promise<IClass[]> {
+    const classes = await new ClassMasterService().getAll()
+    const generatedClasses = this.generateClasses(classes, lowerSection, higherSection, schoolId)
+    
+    return this.classModel.insertMany(generatedClasses)
+  }
+
   public async getAllBySchool(school: string): Promise<IClass[]> {
     return this.classModel.find({ school })
   }
 
   public async get(id: string): Promise<IClass> {
     return this.classModel.findOne({ _id: id })
+  }
+
+  public generateClasses(classes: IBaseClassMaster[], lowerSection: string, higherSection: string, schoolId: string): IBaseClass[] {
+    const lowerOrder = _.minBy(
+      classes.filter(({ section }) => section === lowerSection),
+      ({ order }) => order).order
+
+    const higherOrder = _.maxBy(
+      classes.filter(({ section }) => section === higherSection),
+      ({ order }) => order).order
+
+    const classesToInsert = classes.filter(({ order }) => order >= lowerOrder && order <= higherOrder)
+
+    return [
+      ...this.getClassByDivision(classesToInsert, 'A', schoolId),
+      ...this.getClassByDivision(classesToInsert, 'B', schoolId),
+      ...this.getClassByDivision(classesToInsert, 'C', schoolId),
+      ...this.getClassByDivision(classesToInsert, 'D', schoolId),
+      ...this.getClassByDivision(classesToInsert, 'E', schoolId),
+      ...this.getClassByDivision(classesToInsert, 'F', schoolId),
+    ];
+  }
+
+  private getClassByDivision(classes: IBaseClassMaster[], division: string, school: string): IBaseClass[] {
+    return classes.map(({ name }) => {
+      return {
+        name,
+        division,
+        school
+      }
+    })
   }
 }
 

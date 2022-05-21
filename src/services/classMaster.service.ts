@@ -16,7 +16,7 @@ class ClassMasterService {
   }
 
   public async getAll(): Promise<IClassMaster[]> {
-    return this.classMasterModel.find()
+    return this.classMasterModel.find().sort({ order: 1 })
   }
 }
 

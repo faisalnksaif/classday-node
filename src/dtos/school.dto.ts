@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { SECTION } from '@/models/classMaster.model';
+import { IsString, IsNotEmpty, IsEnum } from 'class-validator';
 
 export class CreateSchoolDto {
   @IsNotEmpty()
@@ -8,4 +9,10 @@ export class CreateSchoolDto {
   @IsNotEmpty()
   @IsString()
   public address: string;
+
+  @IsEnum(SECTION)
+  public lowerSection: SECTION;
+
+  @IsEnum(SECTION)
+  public higherSection: SECTION;
 }
