@@ -18,7 +18,7 @@ class ClassController {
     try {
       const classes = await this.classService.getAllBySchool(req.params.school as string);
 
-      res.status(200).json(classes);
+      res.status(200).json({ classes });
     } catch (error) {
       next(error);
     }

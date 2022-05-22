@@ -15,3 +15,13 @@ export class CreateStudentDto {
   @IsString()
   public mobileNumber?: string;
 }
+
+export class GetStudentsDto {
+  @IsOptional()
+  @IsString()
+  public grade: string;
+
+  @IsOptional()
+  @IsString()
+  public division: string;
+}

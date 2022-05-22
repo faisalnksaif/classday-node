@@ -1,5 +1,6 @@
 import { IClass } from "@/interfaces/class.interface";
 import { Schema, model, Document } from "mongoose";
+import { SECTION } from "./classMaster.model";
 
 const ClassSchema = new Schema({
   name: {
@@ -15,6 +16,10 @@ const ClassSchema = new Schema({
     required: true,
     ref: 'School'
   },
+  section: {
+    type: Schema.Types.String,
+    enum: [SECTION.KINDER_GARTEN, SECTION.PRIMARY, SECTION.UPPER_PRIMARY, SECTION.SECONDARY, SECTION.HIGHER_SECONDARY,]
+  }
 }, { timestamps: true });
 
 

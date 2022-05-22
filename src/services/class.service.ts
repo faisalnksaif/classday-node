@@ -59,11 +59,12 @@ class ClassService {
   }
 
   private getClassByDivision(classes: IBaseClassMaster[], division: string, school: string): IBaseClass[] {
-    return classes.map(({ name }) => {
+    return classes.map(({ name, section }) => {
       return {
         name,
         division,
-        school
+        school,
+        section,
       }
     })
   }
