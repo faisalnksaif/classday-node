@@ -12,7 +12,7 @@
     "test": "jest --forceExit --detectOpenHandles",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
-    "deploy:prod": "pm2 start ./ecosystem.config.js --only prod",
+    "deploy:prod": "pm2 kill && pm2 start ./ecosystem.config.js --only prod",
     "deploy:dev": "npm run pm2 restart ecosystem.config.js --only dev",
     "migrate:dev": "npm run migrate:prod && cross-env NODE_ENV=development ts-node src/migrations/index.ts up",
     "migrate:prod": "cross-env NODE_ENV=production ts-node src/migrations/index.ts up"
