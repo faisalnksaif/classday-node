@@ -27,7 +27,6 @@ class UserService {
   }
 
   public async findUserByFirebaseId(firebaseUid: string): Promise<User> {
-    console.log(`Firebase user id is ${firebaseUid}`)
     const user = await this.users.findOne({ firebaseUid })
     if (!user) throw new Error('User not found with firebaseUid')
     return user;
