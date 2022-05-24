@@ -1,18 +1,14 @@
 import { NextFunction, query, Request, Response } from 'express';
 import StudentService from '@/services/student.service';
+import asyncHandler from '@/utils/asynchandler';
 
 class StudentController {
   public studentService = new StudentService();
 
-  public create = async (req: Request, res: Response, next: NextFunction) => {
-    try {
+  public create = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
       const student = await this.studentService.create(req.body);
-
       res.status(200).json(student);
-    } catch (error) {
-      next(error);
-    }
-  };
+  });
 
   public getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {

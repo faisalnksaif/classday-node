@@ -7,19 +7,29 @@ const ParentSchema = new Schema({
   name: {
     type: Schema.Types.String,
     required: true,
-    unique: true,
   },
   mobileNumber: {
-    required: true,
     type: Schema.Types.String,
+    required: true,
+    unique:true,
     maxLength: 10,
     minLength: 10
   },
-  school: {
+  occupation:{
+    type: Schema.Types.String,
+  },
+  income:{
+    type: Schema.Types.Number,
+  },
+  rationCard:{
+    type: Schema.Types.String,
+    required: true,
+  },
+  address:{
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'School'
-  },
+    ref: 'Address'
+  }
 }, { timestamps: true });
 
 

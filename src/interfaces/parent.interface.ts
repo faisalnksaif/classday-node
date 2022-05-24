@@ -1,8 +1,12 @@
-import { Document } from "mongoose"
-import { ISchool } from "./school.interface"
+import { Document, ObjectId } from "mongoose"
+import { IAddress } from "./address.interface"
 
 export interface IParent extends Document {
   name: string
   mobileNumber: string
-  school: ISchool['_id']
+  occupation?: string
+  income?: number
+  rationCard?: string
+  address: IAddress['_id']
+
 }

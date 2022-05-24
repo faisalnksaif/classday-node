@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional } from 'class-validator';
 import { Schema } from 'mongoose';
 
 export class CreateParentDto {
@@ -8,7 +8,19 @@ export class CreateParentDto {
 
   @IsNotEmpty()
   @IsString()
-  public school: Schema.Types.ObjectId;
+  public occupation: string
+
+  @IsOptional()
+  @IsString()
+  public income: string
+
+  @IsNotEmpty()
+  @IsString()
+  public rationCard: string
+
+  @IsNotEmpty()
+  @IsString()
+  public address: Schema.Types.ObjectId
 
   @IsNotEmpty()
   @IsString()
