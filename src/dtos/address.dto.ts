@@ -1,49 +1,47 @@
 import { IsString, IsOptional, IsNumber } from 'class-validator';
 
-export class CreateAddressDto {
+export class AddressDto {
+  @IsOptional()
+  @IsString()
+  pinCode?: string
 
-    @IsOptional()
-    @IsString()
+  @IsOptional()
+  @IsString()
+  district?: string
 
-    pinCode: string
+  @IsOptional()
+  @IsNumber()
+  state?: number
 
-    @IsOptional()
-    @IsString()
-    district: string
+  @IsOptional()
+  @IsString()
+  panchayath?: string
 
-    @IsOptional()
-    @IsNumber()
-    state: number
-    
-    @IsOptional()
-    @IsString()
-    panchayath: string
+  @IsOptional()
+  @IsString()
+  houseName?: string
 
-    @IsOptional()
-    @IsString()
-    houseName?: string
+  @IsOptional()
+  @IsString()
+  place?: string
 
-    @IsOptional()
-    @IsString()
-    place?: string
+  @IsOptional()
+  @IsString()
+  taluk?: string
 
-    @IsOptional()
-    @IsString()
-    taluk?: string
+  @IsOptional()
+  @IsNumber()
+  localBody?: number
 
-    @IsOptional()
-    @IsNumber()
-    localBody?: number
+  @IsOptional()
+  @IsString()
+  postOffice?: string
 
-    @IsOptional()
-    @IsString()
-    postOffice?: string
+  @IsOptional()
+  @IsString()
+  occupation?: string
 
-    @IsOptional()
-    @IsString()
-    occupation?: string
-
-    @IsOptional()
-    @IsString()
-    email?: string
+  @IsOptional()
+  @IsString()
+  email?: string
 }

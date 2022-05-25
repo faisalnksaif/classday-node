@@ -11,25 +11,51 @@ const ParentSchema = new Schema({
   mobileNumber: {
     type: Schema.Types.String,
     required: true,
-    unique:true,
+    unique: true,
     maxLength: 10,
     minLength: 10
   },
-  occupation:{
+  occupation: {
     type: Schema.Types.String,
   },
-  income:{
+  income: {
     type: Schema.Types.Number,
   },
-  rationCard:{
+  rationCard: {
     type: Schema.Types.String,
-    required: true,
   },
-  address:{
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Address'
-  }
+  address: {
+    houseName: {
+      type: Schema.Types.String,
+    },
+    place: {
+      type: Schema.Types.String,
+    },
+    state: {
+      type: Schema.Types.String,
+    },
+    district: {
+      type: Schema.Types.String,
+    },
+    taluk: {
+      type: Schema.Types.String,
+    },
+    panchayath: {
+      type: Schema.Types.String,
+    },
+    localBody: {
+      type: Schema.Types.String,
+    },
+    postOffice: {
+      type: Schema.Types.String,
+    },
+    pinCode: {
+      type: Schema.Types.String,
+    },
+    email: {
+      type: Schema.Types.String,
+    }
+  },
 }, { timestamps: true });
 
 

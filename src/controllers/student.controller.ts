@@ -1,4 +1,4 @@
-import { NextFunction, query, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import StudentService from '@/services/student.service';
 import asyncHandler from '@/utils/asynchandler';
 

@@ -1,20 +1,29 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
-import { Schema } from 'mongoose';
+import { IsDefined } from 'class-validator'
+import { ValidateNested } from '@/middlewares/validation.middleware';
+
+import { CreateParentDto } from './parent.dto';
+import { CreateStudentDto, StudentAdmissionDto } from './student.dto';
+import { AddressDto } from './address.dto';
+import { CreateSchoolTransferDto } from './schoolTransfer.dto';
 
 export class CreateStudentAdmissionDto {
-  @IsNotEmpty()
-  @IsString()
-  public name: string;
+  @IsDefined()
+  @ValidateNested(CreateStudentDto)
+  public student: CreateStudentDto
 
-  @IsNotEmpty()
-  @IsString()
-  public school: Schema.Types.ObjectId;
+  @IsDefined()
+  @ValidateNested(StudentAdmissionDto)
+  public admissionDetails?: StudentAdmissionDto
 
-  @IsNotEmpty()
-  @IsString()
-  public parent: Schema.Types.ObjectId;
+  @IsDefined()
+  @ValidateNested(CreateParentDto)
+  public parent: CreateParentDto
 
-  @IsOptional()
-  @IsString()
-  public mobileNumber?: string;
+  @IsDefined()
+  @ValidateNested(AddressDto)
+  public address: AddressDto
+
+  @IsDefined()
+  @ValidateNested(CreateSchoolTransferDto)
+  public schoolTransfer: CreateSchoolTransferDto
 }

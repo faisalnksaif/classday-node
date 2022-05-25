@@ -1,5 +1,4 @@
-import { Document, ObjectId } from "mongoose"
-import { IAddress } from "./address.interface"
+import { Document } from "mongoose"
 
 export interface IParent extends Document {
   name: string
@@ -7,6 +6,19 @@ export interface IParent extends Document {
   occupation?: string
   income?: number
   rationCard?: string
-  address: IAddress['_id']
+  address: IAddress
+}
 
+export interface IAddress {
+  houseName?: string
+  place?: string
+  state: number
+  district?: string
+  taluk?: string
+  panchayath?: string
+  localBody?: number
+  postOffice?: string
+  pinCode?: string
+  occupation?: string
+  email?: string
 }

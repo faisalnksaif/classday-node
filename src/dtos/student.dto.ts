@@ -1,108 +1,88 @@
 import { Schema } from 'mongoose';
 
-import { IsString, IsNotEmpty, IsOptional, IsObject, isNotEmpty, IsEnum, ValidateNested } from 'class-validator';
-import { CreateParentDto } from './parent.dto';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, IsEnum, MaxLength, MinLength } from 'class-validator';
 import { GENDER } from '@/models/student.model';
-import { CreateAddressDto } from './address.dto';
-import { CreateTcDto } from './tc.dto';
-
 
 export class CreateStudentDto {
-    @IsNotEmpty()
-    name: string
+  @IsNotEmpty()
+  @IsString()
+  name: string
 
-    @IsEnum(GENDER)
-    gender: GENDER
+  @IsNotEmpty()
+  @IsString()
+  school: Schema.Types.ObjectId;
 
-    @IsNotEmpty()
-    dob: string
+  @IsOptional()
+  @IsEnum(GENDER)
+  gender?: GENDER
 
-    @IsNotEmpty()
-    age: string
+  @IsOptional()
+  @IsNumber()
+  dob?: number
 
-    @IsNotEmpty()
-    nationality: string
+  @IsOptional()
+  @IsString()
+  nationality?: string
 
-    @IsNotEmpty()
-    @IsString()
-    school: Schema.Types.ObjectId;
+  @IsOptional()
+  @IsString()
+  bloodGroup?: string
 
-    @IsNotEmpty()
-    @IsString()
-    parent: Schema.Types.ObjectId;
+  @IsOptional()
+  @IsNumber()
+  height?: number
 
-    @IsNotEmpty()
-    @IsString()
-    address: Schema.Types.ObjectId;
+  @IsOptional()
+  @IsNumber()
+  weight?: number
 
-    @IsNotEmpty()
-    @IsString()
-    dateOfAdmission: string
+  @IsOptional()
+  @IsString()
+  guardian?: string
 
-    @IsOptional()
-    @IsString()
-    bloodGroup?: string
+  @IsOptional()
+  @IsString()
+  relationWithGuardian?: string
 
-    @IsOptional()
-    @IsString()
-    height?: string
+  @IsOptional()
+  @IsString()
+  @MaxLength(10)
+  @MinLength(10)
+  mobileNumber?: string
 
-    @IsOptional()
-    @IsString()
-    weight?: string
-
-    @IsOptional()
-    @IsString()
-    guardian?: string
-
-    @IsOptional()
-    @IsString()
-    relationWithGuardian?: string
-
-    @IsOptional()
-    @IsString()
-    placeOfBirth?: string
-
-    @IsOptional()
-    @IsString()
-    religion?: string
-
-    @IsOptional()
-    @IsString()
-    cast?: string
-
-    @IsOptional()
-    @IsString()
-    category?: string
-
-    @IsOptional()
-    @IsString()
-    mobileNumber?: string
+  @IsOptional()
+  @IsString()
+  email?: string
 }
-export class AddStudentDto {
-    @IsNotEmpty()
-    @ValidateNested()
-    public student: CreateStudentDto
 
-    @IsNotEmpty()
-    @ValidateNested()
-    public address: CreateAddressDto
+export class StudentAdmissionDto {
+  @IsOptional()
+  @IsNumber()
+  dateOfAdmission?: number
 
-    @IsNotEmpty()
-    @ValidateNested()
-    public parent: CreateParentDto
+  @IsOptional()
+  @IsString()
+  placeOfBirth?: string
 
-    @IsOptional()
-    @IsObject()
-    public tc: CreateTcDto
+  @IsOptional()
+  @IsString()
+  religion?: string
+
+  @IsOptional()
+  @IsString()
+  cast?: string
+
+  @IsOptional()
+  @IsString()
+  category?: string
 }
 
 export class GetStudentsDto {
-    @IsOptional()
-    @IsString()
-    public grade: string;
+  @IsOptional()
+  @IsString()
+  public grade: string;
 
-    @IsOptional()
-    @IsString()
-    public division: string;
+  @IsOptional()
+  @IsString()
+  public division: string;
 }

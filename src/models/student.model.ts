@@ -2,10 +2,11 @@ import paginate from 'mongoose-paginate-v2';
 import { Schema, model, Document, PaginateModel } from "mongoose";
 
 import { IStudent } from "@/interfaces/student.interface";
+
 export enum GENDER {
-  MALE = "M",
-  FEMALE = "F",
-  OTHER = "O"
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER"
 }
 
 const StudentSchema = new Schema({
@@ -15,19 +16,16 @@ const StudentSchema = new Schema({
   },
   gender: {
     type: Schema.Types.String,
-    required: true,
+    enum: {
+      values: [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER],
+      message: 'Please select a valid gender'
+    },
   },
   dob: {
-    type: Schema.Types.String,
-    required: true,
-  },
-  age: {
-    type: Schema.Types.String,
-    required: true,
+    type: Schema.Types.Date,
   },
   nationality: {
     type: Schema.Types.String,
-    required: true,
   },
   school: {
     type: Schema.Types.ObjectId,
@@ -36,34 +34,26 @@ const StudentSchema = new Schema({
   },
   parent: {
     type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Parent'
-  },
-  address: {
-    type: Schema.Types.ObjectId,
-    required: true,
     ref: 'Parent'
   },
   dateOfAdmission: {
-    type: Schema.Types.String,
-    required: true,
+    type: Schema.Types.Date,
   },
   bloodGroup: {
     type: Schema.Types.String,
   },
-
   height: {
-    type: Schema.Types.String,
+    type: Schema.Types.Number,
   },
   weight: {
-    type: Schema.Types.String,
+    type: Schema.Types.Number,
   },
   mobileNumber: {
     type: Schema.Types.String,
     maxLength: 10,
     minLength: 10
   },
-  gurdian: {
+  guardian: {
     type: Schema.Types.String,
   },
   relationWithGuardian: {
@@ -80,6 +70,13 @@ const StudentSchema = new Schema({
   },
   category: {
     type: Schema.Types.String,
+  },
+  email: {
+    type: Schema.Types.String,
+  },
+  schoolTransfer: {
+    type: Schema.Types.ObjectId,
+    ref: 'SchoolTransfer'
   },
 }, { timestamps: true });
 

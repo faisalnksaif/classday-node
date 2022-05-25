@@ -8,23 +8,24 @@ export class CreateParentDto {
 
   @IsNotEmpty()
   @IsString()
-  public occupation: string
-
-  @IsOptional()
-  @IsString()
-  public income: string
-
-  @IsNotEmpty()
-  @IsString()
-  public rationCard: string
-
-  @IsNotEmpty()
-  @IsString()
-  public address: Schema.Types.ObjectId
-
-  @IsNotEmpty()
-  @IsString()
   @MaxLength(10)
   @MinLength(10)
   public mobileNumber: string;
+
+  /** May be parent already exists, this time we give parent id */
+  @IsOptional()
+  @IsString()
+  public id?: Schema.Types.ObjectId;
+
+  @IsOptional()
+  @IsString()
+  public occupation?: string
+
+  @IsOptional()
+  @IsString()
+  public income?: string
+
+  @IsOptional()
+  @IsString()
+  public rationCard?: string
 }
