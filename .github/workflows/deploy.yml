@@ -22,7 +22,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /home/ubuntu/classday-node &&
             git pull origin master &&
-            npm i &&
+            npm ci &&
             npm run build &&
             npm run deploy:dev
           '
