@@ -16,7 +16,7 @@ class StudentAdmissionRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/enums`, firebaseAuthMiddleware, this.studentAdmissionController.getEnums);
+    this.router.get(`${this.path}/enums`, this.studentAdmissionController.getEnums);
     this.router.post(`${this.path}`, firebaseAuthMiddleware, validationMiddleware(CreateStudentAdmissionDto, 'body', false), this.studentAdmissionController.create);
   }
 }
