@@ -14,8 +14,8 @@ class DistrictMasterRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/states`, firebaseAuthMiddleware, this.districtMasterController.getStates);
-    this.router.get(`${this.path}/districts/state/:state`, firebaseAuthMiddleware, this.districtMasterController.getDistrictsByState);
+    this.router.get(`${this.path}/states`, this.districtMasterController.getStates);
+    this.router.get(`${this.path}/districts/state/:state`, this.districtMasterController.getDistrictsByState);
   }
 }
 
