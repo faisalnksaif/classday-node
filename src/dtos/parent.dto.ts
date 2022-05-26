@@ -1,10 +1,15 @@
-import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional } from 'class-validator';
 import { Schema } from 'mongoose';
+import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional, IsEnum } from 'class-validator';
+import { RATION_CARD_TYPE } from '@/models/parent.model';
 
 export class CreateParentDto {
   @IsNotEmpty()
   @IsString()
-  public name: string;
+  public fatherName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  public motherName: string;
 
   @IsNotEmpty()
   @IsString()
@@ -19,13 +24,21 @@ export class CreateParentDto {
 
   @IsOptional()
   @IsString()
-  public occupation?: string
+  public guardian?: string
 
   @IsOptional()
   @IsString()
-  public income?: string
+  public occupationOfGuardian?: string
 
   @IsOptional()
   @IsString()
-  public rationCard?: string
+  public relationWithGuardian?: string
+
+  @IsOptional()
+  @IsString()
+  public annualIncome?: string
+
+  @IsOptional()
+  @IsEnum(RATION_CARD_TYPE)
+  public rationCardType?: RATION_CARD_TYPE
 }

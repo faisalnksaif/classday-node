@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { Schema, startSession } from 'mongoose';
+import { $enum } from 'ts-enum-util'
 
 import StudentService from '@/services/student.service';
 import StudentParentRelationService from '@/services/studentParentRelation.service';
 import SchoolTransferService from '@/services/schoolTransfer.service';
 import { CreateStudentAdmissionDto } from '@/dtos/studentAdmission.dto';
 import ParentService from '@/services/parent.service';
+import { LOCAL_GOVT_DIRECTORY, RATION_CARD_TYPE } from '@/models/parent.model';
+import { RELIGION, RELIGION_CATEGORY } from '@/models/student.model';
 
 class StudentAdmissionController {
   public studentService: StudentService
@@ -60,6 +63,15 @@ class StudentAdmissionController {
       next(error);
     }
   };
+
+  public getEnums = async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).json({
+      rationCardTypes: $enum(RATION_CARD_TYPE).getValues(),
+      localGovtDirectories: $enum(LOCAL_GOVT_DIRECTORY).getValues(),
+      religion: $enum(RELIGION).getValues(),
+      religionCategories: $enum(RELIGION_CATEGORY).getValues()
+    });
+  }
 }
 
 export default StudentAdmissionController;

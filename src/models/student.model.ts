@@ -1,5 +1,6 @@
 import paginate from 'mongoose-paginate-v2';
 import { Schema, model, Document, PaginateModel } from "mongoose";
+import { $enum } from 'ts-enum-util'
 
 import { IStudent } from "@/interfaces/student.interface";
 
@@ -7,6 +8,29 @@ export enum GENDER {
   MALE = "MALE",
   FEMALE = "FEMALE",
   OTHER = "OTHER"
+}
+
+export enum RELIGION {
+  HINDU = 'HINDU',
+  CHRISTIAN = 'CHRISTIAN',
+  MUSLIM = 'MUSLIM',
+  ISLAM = 'ISLAM',
+  JAIN = 'JAIN',
+  SIKH = 'SIKH',
+  BUDHIST = 'BUDHIST',
+  BAHAI = 'BAHAI',
+  SECULAR = 'SECULAR',
+  JUDAISM = 'JUDAISM',
+  NON_RELIGION = 'NON_RELIGION',
+  NOT_APPLICABLE = 'NOT_APPLICABLE',
+}
+
+export enum RELIGION_CATEGORY {
+  GENERAL = 'GENERAL',
+  SC = 'SC',
+  ST = 'ST',
+  OBC = 'OBC',
+  OEC = 'OEC',
 }
 
 const StudentSchema = new Schema({
@@ -17,7 +41,7 @@ const StudentSchema = new Schema({
   gender: {
     type: Schema.Types.String,
     enum: {
-      values: [GENDER.MALE, GENDER.FEMALE, GENDER.OTHER],
+      values: $enum(GENDER).getValues(),
       message: 'Please select a valid gender'
     },
   },
@@ -64,12 +88,18 @@ const StudentSchema = new Schema({
   },
   religion: {
     type: Schema.Types.String,
+    enum: {
+      values: $enum(RELIGION).getValues()
+    }
   },
   cast: {
     type: Schema.Types.String,
   },
   category: {
     type: Schema.Types.String,
+    enum: {
+      values: $enum(RELIGION_CATEGORY).getValues()
+    }
   },
   email: {
     type: Schema.Types.String,

@@ -30,8 +30,8 @@ export class AddressDto {
   taluk?: string
 
   @IsOptional()
-  @IsNumber()
-  localBody?: number
+  @IsString()
+  localBody?: string
 
   @IsOptional()
   @IsString()
@@ -39,9 +39,13 @@ export class AddressDto {
 
   @IsOptional()
   @IsString()
-  occupation?: string
+  email?: string
 
   @IsOptional()
   @IsString()
-  email?: string
+  localGovtDirectory?: string
+
+  @IsOptional()
+  @IsString()
+  districtPanchayath?: string
 }
