@@ -4,7 +4,7 @@ import { Routes } from '@interfaces/routes.interface';
 import firebaseAuthMiddleware from '@middlewares/auth.middleware';
 import validationMiddleware from '@/middlewares/validation.middleware';
 import StudentController from '@/controllers/student.controller';
-import { CreateStudentDto, GetStudentsDto } from '@/dtos/student.dto';
+import { CreateStudentPersonalDetailsDto, GetStudentsDto } from '@/dtos/student.dto';
 
 class StudentRoute implements Routes {
   public path = '/students';
@@ -16,7 +16,7 @@ class StudentRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}/create`, firebaseAuthMiddleware, validationMiddleware(CreateStudentDto, 'body', false), this.studentController.create);
+    this.router.post(`${this.path}/create`, firebaseAuthMiddleware, validationMiddleware(CreateStudentPersonalDetailsDto, 'body', false), this.studentController.create);
     this.router.get(`${this.path}/all`, firebaseAuthMiddleware, validationMiddleware(GetStudentsDto, 'query', false), this.studentController.getAll);
   }
 }

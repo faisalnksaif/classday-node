@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { ClientSession, Schema } from 'mongoose';
 
 import studentModel from '@/models/student.model';
-import { CreateStudentDto, GetStudentsDto } from '@/dtos/student.dto';
+import { CreateStudentPersonalDetailsDto, GetStudentsDto } from '@/dtos/student.dto';
 import { IStudent } from '@/interfaces/student.interface';
 
 class StudentService {
@@ -14,7 +14,7 @@ class StudentService {
     schoolTransfer,
     session
   }: {
-    studentDetails: CreateStudentDto,
+    studentDetails: CreateStudentPersonalDetailsDto,
     parent?: Schema.Types.ObjectId,
     schoolTransfer?: Schema.Types.ObjectId,
     session?: ClientSession

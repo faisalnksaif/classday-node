@@ -1,9 +1,9 @@
 import { Schema } from 'mongoose';
 
 import { IsString, IsNotEmpty, IsOptional, IsNumber, IsEnum, MaxLength, MinLength } from 'class-validator';
-import { GENDER } from '@/models/student.model';
+import { GENDER, RELIGION, RELIGION_CATEGORY } from '@/models/student.model';
 
-export class CreateStudentDto {
+export class CreateStudentPersonalDetailsDto {
   @IsNotEmpty()
   @IsString()
   name: string
@@ -65,16 +65,16 @@ export class StudentAdmissionDto {
   placeOfBirth?: string
 
   @IsOptional()
-  @IsString()
-  religion?: string
+  @IsEnum(RELIGION)
+  religion?: RELIGION
 
   @IsOptional()
   @IsString()
   cast?: string
 
   @IsOptional()
-  @IsString()
-  category?: string
+  @IsEnum(RELIGION_CATEGORY)
+  category?: RELIGION_CATEGORY
 }
 
 export class GetStudentsDto {

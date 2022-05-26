@@ -41,7 +41,7 @@ const StudentSchema = new Schema({
   gender: {
     type: Schema.Types.String,
     enum: {
-      values: $enum(GENDER).getValues(),
+      values: [...$enum(GENDER).getValues(), null],
       message: 'Please select a valid gender'
     },
   },
@@ -89,7 +89,7 @@ const StudentSchema = new Schema({
   religion: {
     type: Schema.Types.String,
     enum: {
-      values: $enum(RELIGION).getValues()
+      values: [...$enum(RELIGION).getValues(), null]
     }
   },
   cast: {
@@ -98,7 +98,7 @@ const StudentSchema = new Schema({
   category: {
     type: Schema.Types.String,
     enum: {
-      values: $enum(RELIGION_CATEGORY).getValues()
+      values: [...$enum(RELIGION_CATEGORY).getValues(), null]
     }
   },
   email: {

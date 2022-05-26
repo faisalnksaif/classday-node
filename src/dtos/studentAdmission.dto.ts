@@ -2,14 +2,14 @@ import { IsDefined } from 'class-validator'
 import { ValidateNested } from '@/middlewares/validation.middleware';
 
 import { CreateParentDto } from './parent.dto';
-import { CreateStudentDto, StudentAdmissionDto } from './student.dto';
+import { CreateStudentPersonalDetailsDto, StudentAdmissionDto } from './student.dto';
 import { AddressDto } from './address.dto';
 import { CreateSchoolTransferDto } from './schoolTransfer.dto';
 
 export class CreateStudentAdmissionDto {
   @IsDefined()
-  @ValidateNested(CreateStudentDto)
-  public student: CreateStudentDto
+  @ValidateNested(CreateStudentPersonalDetailsDto)
+  public personalDetails: CreateStudentPersonalDetailsDto
 
   @IsDefined()
   @ValidateNested(StudentAdmissionDto)
@@ -17,7 +17,7 @@ export class CreateStudentAdmissionDto {
 
   @IsDefined()
   @ValidateNested(CreateParentDto)
-  public parent: CreateParentDto
+  public parentDetails: CreateParentDto
 
   @IsDefined()
   @ValidateNested(AddressDto)
@@ -25,5 +25,5 @@ export class CreateStudentAdmissionDto {
 
   @IsDefined()
   @ValidateNested(CreateSchoolTransferDto)
-  public schoolTransfer: CreateSchoolTransferDto
+  public schoolTransferDetails: CreateSchoolTransferDto
 }

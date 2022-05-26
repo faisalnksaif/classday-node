@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional, IsEnum } from 'class-validator';
+import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional, IsEnum, ValidateIf } from 'class-validator';
 import { RATION_CARD_TYPE } from '@/models/parent.model';
 
 export class CreateParentDto {
@@ -38,6 +38,7 @@ export class CreateParentDto {
   @IsString()
   public annualIncome?: string
 
+  @ValidateIf((value) => value !== null)
   @IsOptional()
   @IsEnum(RATION_CARD_TYPE)
   public rationCardType?: RATION_CARD_TYPE

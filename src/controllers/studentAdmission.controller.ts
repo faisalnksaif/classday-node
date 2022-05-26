@@ -32,27 +32,28 @@ class StudentAdmissionController {
       let parentId: Schema.Types.ObjectId
       let schoolTransferId: Schema.Types.ObjectId
 
-      if (body.parent) {
-        if (body.parent.id) {
-          parentId = body.parent.id
+      if (body.parentDetails) {
+        if (body.parentDetails.id) {
+          parentId = body.parentDetails.id
         } else {
-          const parent = await this.parentService.create(body.parent, body.address)
+          const parent = await this.parentService.create(body.parentDetails, body.address, session)
           parentId = parent._id
         }
       }
 
-      if (body.schoolTransfer) {
-        const schoolTransfer = await this.schoolTransfer.create(body.schoolTransfer, session)
+      if (body.schoolTransferDetails) {
+        const schoolTransfer = await this.schoolTransfer.create(body.schoolTransferDetails, session)
         schoolTransferId = schoolTransfer._id
       }
 
       const student = await this.studentService.create({
         studentDetails: {
-          ...body.student,
+          ...body.personalDetails,
           ...body.admissionDetails,
         },
         parent: parentId,
         schoolTransfer: schoolTransferId,
+        session,
       })
 
       await session.commitTransaction()

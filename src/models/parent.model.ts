@@ -40,7 +40,7 @@ const ParentSchema = new Schema({
     type: Schema.Types.String,
   },
   annualIncome: {
-    type: Schema.Types.Number,
+    type: Schema.Types.String,
   },
   rationCardType: {
     type: Schema.Types.String,
@@ -48,6 +48,7 @@ const ParentSchema = new Schema({
       values: [
         RATION_CARD_TYPE.APL,
         RATION_CARD_TYPE.BPL,
+        null,
       ]
     }
   },
