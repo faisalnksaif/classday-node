@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { PaginateResult } from 'mongoose'
+import { PaginateResult, Schema } from 'mongoose'
 
 import schoolModel from '@/models/school.model';
 import { ISchool } from '@/interfaces/school.interface';
@@ -24,7 +24,7 @@ class SchoolService {
     return { school, classes }
   }
 
-  public async get(id: string): Promise<ISchool> {
+  public async get(id: Schema.Types.ObjectId): Promise<ISchool> {
     return this.school.findOne({ _id: id });
   }
 

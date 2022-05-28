@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { ClientSession, PaginateResult } from 'mongoose'
+import { ClientSession, PaginateResult, Schema } from 'mongoose'
 
 import { IParent } from '@/interfaces/parent.interface';
 import { CreateParentDto } from '@/dtos/parent.dto';
@@ -17,6 +17,16 @@ class ParentService {
     if (parents.length !== 1) throw new Error('Expected one parent')
 
     return parents[0]
+  }
+
+  public async update(
+    id: Schema.Types.ObjectId, parentDetails: CreateParentDto, address?: AddressDto, session?: ClientSession): Promise<IParent> {
+    const parent = await this.parent.findByIdAndUpdate(id, {
+      ...parentDetails,
+      address
+    }, { session });
+
+    return parent
   }
 
   public async get(id: string): Promise<IParent> {

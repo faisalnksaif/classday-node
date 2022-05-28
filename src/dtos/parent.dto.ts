@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
-import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional, IsEnum, ValidateIf } from 'class-validator';
+import { IsString, IsNotEmpty, MaxLength, MinLength, IsOptional, IsEnum, ValidateIf, IsNumber } from 'class-validator';
 import { RATION_CARD_TYPE } from '@/models/parent.model';
 
-export class CreateParentDto {
+export class ParentDto {
   @IsNotEmpty()
   @IsString()
   public fatherName: string;
@@ -17,11 +17,6 @@ export class CreateParentDto {
   @MinLength(10)
   public mobileNumber: string;
 
-  /** May be parent already exists, this time we give parent id */
-  @IsOptional()
-  @IsString()
-  public id?: Schema.Types.ObjectId;
-
   @IsOptional()
   @IsString()
   public guardian?: string
@@ -35,11 +30,23 @@ export class CreateParentDto {
   public relationWithGuardian?: string
 
   @IsOptional()
-  @IsString()
-  public annualIncome?: string
+  @IsNumber()
+  public annualIncome?: number
 
   @ValidateIf((value) => value !== null)
   @IsOptional()
   @IsEnum(RATION_CARD_TYPE)
   public rationCardType?: RATION_CARD_TYPE
+}
+export class CreateParentDto extends ParentDto {
+  /** May be parent already exists, this time we give parent id */
+  @IsOptional()
+  @IsString()
+  public id?: Schema.Types.ObjectId;
+}
+
+export class UpdateParentDto extends ParentDto {
+  @IsNotEmpty()
+  @IsString()
+  public id: Schema.Types.ObjectId;
 }

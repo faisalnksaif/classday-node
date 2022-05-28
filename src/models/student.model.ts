@@ -1,8 +1,11 @@
+import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 import paginate from 'mongoose-paginate-v2';
-import { Schema, model, Document, PaginateModel } from "mongoose";
+import autoIncrement from 'mongoose-auto-increment'
+import { Schema, model, Document, PaginateModel, createConnection } from "mongoose";
 import { $enum } from 'ts-enum-util'
 
 import { IStudent } from "@/interfaces/student.interface";
+import { dbConnection } from '@/databases';
 
 export enum GENDER {
   MALE = "MALE",
@@ -108,10 +111,30 @@ const StudentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'SchoolTransfer'
   },
+  classes: {
+    type: Schema.Types.Array,
+    academicYear: {
+      type: Schema.Types.String,
+    },
+    name: {
+      type: Schema.Types.String,
+    },
+    division: {
+      type: Schema.Types.String,
+    },
+    isActive: {
+      type: Schema.Types.Boolean,
+      default: true,
+    },
+  }
 }, { timestamps: true });
 
+autoIncrement.initialize(createConnection(dbConnection.url))
+StudentSchema.plugin(autoIncrement.plugin, { model: 'Book', field: 'regNo' });
 
 StudentSchema.plugin(paginate);
+StudentSchema.plugin(aggregatePaginate);
+
 const studentModel = model<IStudent, PaginateModel<IStudent> & Document>('Student', StudentSchema);
 
 export default studentModel;

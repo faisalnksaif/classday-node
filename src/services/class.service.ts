@@ -4,7 +4,8 @@ import classModel from '@/models/class.model';
 import { IBaseClass, IClass } from '@/interfaces/class.interface';
 import { CreateClassDto } from '@/dtos/class.dto';
 import ClassMasterService from './classMaster.service';
-import { IBaseClassMaster } from '@/interfaces/classMaster.interface';
+import { IBaseClassMaster, IClassMaster } from '@/interfaces/classMaster.interface';
+import { SECTION } from '@/models/classMaster.model';
 
 
 class ClassService {
@@ -25,7 +26,7 @@ class ClassService {
   }): Promise<IClass[]> {
     const classes = await new ClassMasterService().getAll()
     const generatedClasses = this.generateClasses(classes, lowerSection, higherSection, schoolId)
-    
+
     return this.classModel.insertMany(generatedClasses)
   }
 
@@ -35,6 +36,11 @@ class ClassService {
 
   public async get(id: string): Promise<IClass> {
     return this.classModel.findOne({ _id: id })
+  }
+
+
+  public async getClassesBySection(section: SECTION): Promise<IClass[]> {
+    return this.classModel.find({ section })
   }
 
   public generateClasses(classes: IBaseClassMaster[], lowerSection: string, higherSection: string, schoolId: string): IBaseClass[] {

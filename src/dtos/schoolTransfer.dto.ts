@@ -1,25 +1,32 @@
 import { IsNotEmpty, IsOptional, IsNumber, IsString } from 'class-validator';
+import { Schema } from 'mongoose';
 
 export class CreateSchoolTransferDto {
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  number?: string;
+  public number?: string;
 
   @IsOptional()
-  @IsNumber()
-  date?: number
+  @IsString()
+  public date?: string
 
   @IsOptional()
-  @IsNumber()
-  admissionDate?: number;
+  @IsString()
+  public admissionDate?: string;
 
   @IsOptional()
-  @IsNumber()
-  leavingDate?: number;
+  @IsString()
+  public leavingDate?: string;
 
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  prevSchool?: string
+  public prevSchool?: string
+}
+
+export class UpdateSchoolTransferDto extends CreateSchoolTransferDto {
+  @IsNotEmpty()
+  @IsString()
+  public _id: Schema.Types.ObjectId;
 }

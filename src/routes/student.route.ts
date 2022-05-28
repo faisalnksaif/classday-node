@@ -17,7 +17,6 @@ class StudentRoute implements Routes {
 
   private initializeRoutes() {
     this.router.post(`${this.path}/create`, firebaseAuthMiddleware, validationMiddleware(CreateStudentPersonalDetailsDto, 'body', false), this.studentController.create);
-    this.router.get(`${this.path}/all`, firebaseAuthMiddleware, validationMiddleware(GetStudentsDto, 'query', false), this.studentController.getAll);
   }
 }
 

@@ -40,7 +40,7 @@ const ParentSchema = new Schema({
     type: Schema.Types.String,
   },
   annualIncome: {
-    type: Schema.Types.String,
+    type: Schema.Types.Number,
   },
   rationCardType: {
     type: Schema.Types.String,

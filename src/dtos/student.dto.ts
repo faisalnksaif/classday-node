@@ -17,8 +17,8 @@ export class CreateStudentPersonalDetailsDto {
   gender?: GENDER
 
   @IsOptional()
-  @IsNumber()
-  dob?: number
+  @IsString()
+  dob?: string
 
   @IsOptional()
   @IsString()
@@ -38,14 +38,6 @@ export class CreateStudentPersonalDetailsDto {
 
   @IsOptional()
   @IsString()
-  guardian?: string
-
-  @IsOptional()
-  @IsString()
-  relationWithGuardian?: string
-
-  @IsOptional()
-  @IsString()
   @MaxLength(10)
   @MinLength(10)
   mobileNumber?: string
@@ -57,8 +49,8 @@ export class CreateStudentPersonalDetailsDto {
 
 export class StudentAdmissionDto {
   @IsOptional()
-  @IsNumber()
-  dateOfAdmission?: number
+  @IsString()
+  dateOfAdmission?: string
 
   @IsOptional()
   @IsString()
@@ -75,6 +67,14 @@ export class StudentAdmissionDto {
   @IsOptional()
   @IsEnum(RELIGION_CATEGORY)
   category?: RELIGION_CATEGORY
+
+  @IsOptional()
+  @IsString()
+  grade?: string
+
+  @IsOptional()
+  @IsString()
+  division?: string
 }
 
 export class GetStudentsDto {

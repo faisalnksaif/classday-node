@@ -13,6 +13,15 @@ const SchoolSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+  academicYears: {
+    type: Schema.Types.Array,
+    name: {
+      type: Schema.Types.String,
+    },
+    isActive: {
+      type: Schema.Types.Boolean,
+    }
+  },
 }, { timestamps: true });
 
 
