@@ -12,6 +12,7 @@ import StudentAdmissionRoute from './routes/studentAdmission.route';
 import ClassRoute from './routes/class.route';
 import ClassMasterRoute from './routes/classMaster.route';
 import DistrictMasterRoute from './routes/districtMaster.route';
+import UserRoute from './routes/user.route';
 
 validateEnv();
 
@@ -24,6 +25,7 @@ const app = new App([
   new ClassRoute(),
   new ClassMasterRoute(),
   new DistrictMasterRoute(),
+  new UserRoute(),
 ]);
 
 app.listen();

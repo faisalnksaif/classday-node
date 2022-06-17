@@ -12,10 +12,11 @@ class UserService {
   public async findAllUser(page: string, limit: string): Promise<{
     users: User[],
     total: number,
-    page: string}> {
+    page: string
+  }> {
     const users: User[] = await this.users.find().sort({ createdAt: -1 })
-    .limit(toNumber(limit))
-    .skip((toNumber(page) - 1) * toNumber(limit));
+      .limit(toNumber(limit))
+      .skip((toNumber(page) - 1) * toNumber(limit));
 
     const total = await this.users.find().countDocuments()
 
@@ -44,7 +45,7 @@ class UserService {
   public async updateUser(userData: UpdateUserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
     const userId = (await new UserService().findUserByFirebaseId(userData.firebaseUid)).id
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData, {new: true});
+    const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData, { new: true });
     if (!updateUserById) throw new HttpException(409, "You're not user");
 
     return updateUserById;
@@ -56,6 +57,26 @@ class UserService {
     if (!deleteUserById) throw new HttpException(409, "You're not user");
 
     return deleteUserById;
+  }
+
+  public getUsersByMobileNumber() {
+    return [
+      {
+        _id: '1',
+        name: 'Faisal Saif',
+        role: 'STUDENT',
+      },
+      {
+        _id: '2',
+        name: 'Ashik Sharaf',
+        role: 'PARENT',
+      },
+      {
+        _id: '3',
+        name: 'Shabeer Ali',
+        role: 'TEACHER',
+      },
+    ]
   }
 }
 

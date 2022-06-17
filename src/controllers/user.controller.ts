@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@interfaces/users.interface';
-import UserService from '@services/users.service';
+import UserService from '@services/user.service';
 
-class UsersController {
+class UserController {
   public userService = new UserService();
 
   public getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const page: string = req.query.page as string;
       const limit: string = (req.query.limit || '10') as string;
-      const findAllUsersData = await this.userService.findAllUser(page,limit);
+      const findAllUsersData = await this.userService.findAllUser(page, limit);
 
       res.status(200).json(findAllUsersData);
     } catch (error) {
@@ -64,6 +64,16 @@ class UsersController {
       next(error);
     }
   };
+
+  public getUsersByMobileNumber = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = this.userService.getUsersByMobileNumber();
+
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
-export default UsersController;
+export default UserController;
