@@ -1,7 +1,6 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
 import errorHandler from 'errorhandler'
-import admin from 'firebase-admin';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -11,14 +10,11 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
 import { connect, set } from 'mongoose';
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
 import { dbConnection } from '@databases';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
 import { Env, STAGE } from '@/configs/env';
-import cloudinary from 'cloudinary';
 import ip from 'ip'
 
 class App {
@@ -36,7 +32,6 @@ class App {
     this.initializeRoutes(routes);
     // this.initializeSwagger();
     this.initializeErrorHandling();
-    this.initializeFirebase();
 
     // this.configCloudinary()
   }
@@ -68,15 +63,6 @@ class App {
     console.log('mongod connected');
   }
 
-  private configCloudinary() {
-    // Setting up cloudinary config
-    cloudinary.v2.config({
-      cloud_name: Env.CLOUDINARY_CLOUD_NAME,
-      api_key: Env.CLOUDINARY_API_KEY,
-      api_secret: Env.CLOUDINARY_API_SECRET
-    })
-  }
-
 
   private initializeMiddlewares() {
     this.app.use(errorHandler({ log: true }));
@@ -100,28 +86,6 @@ class App {
     routes.forEach(route => {
       this.app.use('/', route.router);
     });
-  }
-
-  private initializeFirebase() {
-    admin.initializeApp({
-      credential: admin.credential.cert(require(Env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH)),
-    });
-  }
-
-  private initializeSwagger() {
-    const options = {
-      swaggerDefinition: {
-        info: {
-          title: 'REST API',
-          version: '1.0.0',
-          description: 'Example docs',
-        },
-      },
-      apis: ['swagger.yaml'],
-    };
-
-    const specs = swaggerJSDoc(options);
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   private initializeErrorHandling() {

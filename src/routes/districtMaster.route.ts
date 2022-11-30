@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import { Routes } from '@interfaces/routes.interface';
-import firebaseAuthMiddleware from '@middlewares/auth.middleware';
 import DistrictMasterController from '@/controllers/districtMaster.controller';
 
 class DistrictMasterRoute implements Routes {
