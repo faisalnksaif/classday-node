@@ -29,4 +29,8 @@ export class Env {
         return `mongodb://${process.env.MONGO_HOST_PROD}:${process.env.MONGO_PORT_PROD}/${process.env.MONGO_DB_PROD}`;
     }
   }
+
+  public static get PORT(): string | number {
+    return process.env.PORT || 3000;
+  }
 }
