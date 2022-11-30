@@ -1,14 +1,14 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
-import errorHandler from 'errorhandler'
+// import errorHandler from 'errorhandler'
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import config from 'config';
 import express from 'express';
-import helmet from 'helmet';
-import hpp from 'hpp';
-import morgan from 'morgan';
+// import helmet from 'helmet';
+// import hpp from 'hpp';
+// import morgan from 'morgan';
 import { connect, set } from 'mongoose';
 import { dbConnection } from '@databases';
 import { Routes } from '@interfaces/routes.interface';
@@ -65,11 +65,11 @@ class App {
 
 
   private initializeMiddlewares() {
-    this.app.use(errorHandler({ log: true }));
-    this.app.use(morgan(config.get('log.format'), { stream }));
-    this.app.use(cors({ origin: config.get('cors.origin'), credentials: config.get('cors.credentials') }));
-    this.app.use(hpp());
-    this.app.use(helmet());
+    // this.app.use(errorHandler({ log: true }));
+    // this.app.use(morgan(config.get('log.format'), { stream }));
+    // this.app.use(cors({ origin: config.get('cors.origin'), credentials: config.get('cors.credentials') }));
+    // this.app.use(hpp());
+    // this.app.use(helmet());
     this.app.use(compression());
     this.app.use(express.json({ limit: '50mb' }));
     this.app.use(express.urlencoded({ limit: '50mb', extended: true }));
