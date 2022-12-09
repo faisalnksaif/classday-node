@@ -8,6 +8,7 @@ import ClassMasterRoute from './routes/classMaster.route';
 import DistrictMasterRoute from './routes/districtMaster.route';
 import IndexRoute from './routes/index.route';
 import StudentRoute from './routes/student.route';
+import TeacherRoutes from './routes/teacher.route';
 
 validateEnv();
 
@@ -16,6 +17,7 @@ const app = new App([
   new DistrictMasterRoute(),
   new IndexRoute(),
   new StudentRoute(),
+  new TeacherRoutes(),
 ]);
 
 app.listen();

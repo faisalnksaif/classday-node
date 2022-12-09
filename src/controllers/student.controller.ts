@@ -7,6 +7,7 @@ class StudentController {
     constructor() {
         this.studentService
     }
+
     public index = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const body = req.body;
