@@ -1,4 +1,3 @@
-import { ITeacher } from '@/interfaces/teacher.interface';
 import { TeacherService } from '@/services/teacher.service';
 import { NextFunction, Request, Response } from 'express';
 

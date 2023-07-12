@@ -26,7 +26,7 @@ export class TeacherService {
     // }
 
     public async findAllClassTeachers(): Promise<Teacher[]> {
-        const findTeacher: Teacher[] = this.teachers.find({ isClassTeacher: true });
+        const findTeacher: any = this.teachers.find({ isClassTeacher: true });
         return findTeacher;
     }
 }
